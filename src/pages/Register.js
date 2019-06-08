@@ -107,14 +107,15 @@ class SingupPage extends Component {
 
         if (check) {
             this.props.navigation.navigate('Login');
-
+             
             var data = {
                 firstName: this.props.fName,
                 lastName: this.props.lName,
                 phoneNumber: this.props.phNo,
+                password : this.props.uPwd1,
                 imageUrl: "",
                 role: "",
-                service: "",
+                service: "advance",
                 username: this.props.fName,
                 email: this.props.uMail,
                 emailVerified: true,
@@ -128,9 +129,8 @@ class SingupPage extends Component {
             }).then(response => {
                     console.log(response);
 
-                    console.log(response.data.firstName);
                 }).catch(error => {
-                    console.log(error);
+                    console.log({error});
                 }
                 );
 

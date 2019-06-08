@@ -12,9 +12,9 @@ import {
 import styles from '../styles/Login.less';
 import { connect } from 'react-redux';
 import { LOGIN_EMAIL, LOGIN_PASSWORD } from '../constants/ActionTypes';
-import Snackbar from 'react-native-snackbar';
+import axios from "axios";
 
-//import { signinPage, saveData, fbLogin } from '../config/Implementation';
+
 
 const mapStateToProps = state => ({ ...state.LoginReducer });
 const mapDispatchToProps = dispatch => ({
@@ -53,7 +53,7 @@ class LoginPage extends Component {
 
 
     signInValidation() {
-        var email = '', pwd ='' ,mailValid;
+        var email = '', pwd = '', mailValid;
         email = this.props.email;
         pwd = this.props.password;
         mailValid = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -96,9 +96,36 @@ class LoginPage extends Component {
 
 
     async sign() {
+        let email, pwd;
+        email = this.props.email;
+        pwd = this.props.password;
         var validate = this.signInValidation();
-        if (validate)
-            this.props.navigation.navigate('Drawer');
+
+
+        if (validate) {
+            //     let data = new FormData();
+            let data = {
+                username: email,
+                password: pwd,
+            }
+
+            axios.post('http://34.213.106.173/api/user/login', data, {
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            }).then(response => {
+                console.log(response);
+                if (response.status == 200) {
+                    this.props.navigation.navigate('Drawer');
+                }else{
+                    alert('enter a valid email & password ');
+                }
+            }).catch(error => {
+                alert('enter a valid email & password ');
+                console.log(error);
+            });
+
+        }
 
     }
 
@@ -124,7 +151,6 @@ class LoginPage extends Component {
                     //  onSubmitEditing={() => this.pwd.focus()}
                     value={email}
                 />
-
                 <TextInput
                     style={styles.textBox}
                     placeholder='enter password '
