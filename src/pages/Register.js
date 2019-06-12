@@ -9,10 +9,11 @@ import {
 } from 'react-native';
 
 import { ScrollView } from 'react-native-gesture-handler';
-import axios from 'axios';
 import styles from '../styles/Register.less';
-import { USER_EMAIL, USER_FIRSTNAME, USER_LASTNAME, USER_PASSWORD1, USER_PASSWORD2, DATE_OF_BIRTH, MOBILE_NUMBER } from '../constants/ActionTypes';
+import { USER_EMAIL, USER_FIRSTNAME, USER_LASTNAME, USER_PASSWORD1, USER_PASSWORD2, DATE_OF_BIRTH, MOBILE_NUMBER, REGISTRATION_START } from '../constants/ActionTypes';
 import { connect } from 'react-redux';
+import Snackbar from "react-native-snackbar";
+import { put } from "redux-saga/effects";
 
 //import register from '../config/Implementation';
 //import saveData from '../config/AsyncStorage';
@@ -33,8 +34,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: USER_PASSWORD1, key: 'uPwd1', value }),
     onChangePASSWORD2: value =>
         dispatch({ type: USER_PASSWORD2, key: 'uPwd2', value }),
-    // onSubmit: data =>
-    //     dispatch({ type: LOGIN_USER, payload: data = data }),
+    onSubmit: data =>
+        dispatch({ type: REGISTRATION_START, payload: data = data }),
     // closeError: () =>
     //     dispatch({ type: CLOSE_TOAST })
     // onUnload: () =>
@@ -106,13 +107,12 @@ class SingupPage extends Component {
         var check = this.validation();
 
         if (check) {
-            this.props.navigation.navigate('Login');
-             
+
             var data = {
                 firstName: this.props.fName,
                 lastName: this.props.lName,
                 phoneNumber: this.props.phNo,
-                password : this.props.uPwd1,
+                password: this.props.uPwd1,
                 imageUrl: "",
                 role: "",
                 service: "advance",
@@ -121,20 +121,21 @@ class SingupPage extends Component {
                 emailVerified: true,
 
             }
+            this.props.onSubmit(data);
 
-            axios.post('http://34.213.106.173/api/user/userSignUp', data, {
-                headers: {
-                    "Content-Type": 'application/json'
-                }
-            }).then(response => {
-                    console.log(response);
+            // axios.post('http://34.213.106.173/api/user/userSignUp', data, {
+            //     headers: {
+            //         "Content-Type": 'application/json'
+            //     }
+            // }).then(response => {
+            //     console.log(response);
 
-                }).catch(error => {
-                    console.log({error});
-                }
-                );
+            // }).catch(error => {
+            //     console.log({ error });
+            // }
+            // );
 
-            alert('inserted');
+            // alert('inserted');
         }
     }
 
@@ -148,6 +149,34 @@ class SingupPage extends Component {
         lName = this.props.lName;
         dob = this.props.dob;
         phno = this.props.phNo;
+        console.log(this.props.success, ': it is props success');
+        console.log(this.props.error, ': it is props error');
+
+
+        if (this.props.success === 200) {
+            this.props.navigation.navigate('Login');
+            Snackbar.show({
+                title: 'Registration Success',
+                duration: Snackbar.LENGTH_SHORT,
+            })
+           // put({ type: REGISTRATION_SUCCESS, payload: '' })
+
+        } else if (this.props.error === 401) {
+            Snackbar.show({
+                title: 'Registration failed',
+                duration: Snackbar.LENGTH_SHORT,
+            })
+          //  put({ type: REGISTRATION_FAIL, payload: '' })
+
+        } else if (this.props.error === 500) {
+
+            Snackbar.show({
+                title: 'Registration failed',
+                duration: Snackbar.LENGTH_SHORT,
+            })
+           // put({ type: REGISTRATION_FAIL, payload: '' })
+
+        }
 
 
         return (

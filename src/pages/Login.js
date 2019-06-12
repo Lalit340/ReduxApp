@@ -11,8 +11,10 @@ import {
 
 import styles from '../styles/Login.less';
 import { connect } from 'react-redux';
-import { LOGIN_EMAIL, LOGIN_PASSWORD } from '../constants/ActionTypes';
+import { LOGIN_EMAIL, LOGIN_PASSWORD, LOGIN_USER } from '../constants/ActionTypes';
 import axios from "axios";
+import Snackbar from "react-native-snackbar";
+import { put } from "redux-saga/effects";
 
 
 
@@ -22,8 +24,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: LOGIN_EMAIL, key: 'email', value }),
     onChangePassword: value =>
         dispatch({ type: LOGIN_PASSWORD, key: 'password', value }),
-    // onSubmit: data =>
-    //     dispatch({ type: LOGIN_USER, payload: data = data }),
+    onSubmit: data =>
+        dispatch({ type: LOGIN_USER, payload: data = data }),
     // closeError: () =>
     //     dispatch({ type: CLOSE_TOAST })
     // onUnload: () =>
@@ -108,22 +110,26 @@ class LoginPage extends Component {
                 username: email,
                 password: pwd,
             }
+            this.props.onSubmit(data);
 
-            axios.post('http://34.213.106.173/api/user/login', data, {
-                headers: {
-                    "Content-Type": 'application/json'
-                }
-            }).then(response => {
-                console.log(response);
-                if (response.status == 200) {
-                    this.props.navigation.navigate('Drawer');
-                }else{
-                    alert('enter a valid email & password ');
-                }
-            }).catch(error => {
-                alert('enter a valid email & password ');
-                console.log(error);
-            });
+
+
+            // axios.post('http://34.213.106.173/api/user/login', data, {
+            //     headers: {
+            //         "Content-Type": 'application/json'
+            //     }
+            // }).then(response => {
+            //     console.log(response);
+            //     if (response.status == 200) {
+            //         this.props.navigation.navigate('Drawer');
+            //     } else {
+            //         alert('enter a valid email & password ');
+            //     }
+            // }).catch(error => {
+            //     alert('enter a valid email & password ');
+            //     console.log(error);
+            // });
+
 
         }
 
@@ -132,6 +138,25 @@ class LoginPage extends Component {
     render() {
         const email = this.props.email;
         const pwd = this.props.password;
+        let success, error;
+        success = this.props.success.status;
+        error = this.props.error.status;
+        console.log(this.props.success + ': success');
+
+        if (success === 200) {
+            this.props.navigation.navigate('Drawer');
+            Snackbar.show({
+                title: 'Login Success',
+                duration: Snackbar.LENGTH_SHORT,
+            });
+
+        } else if (error === 401) {
+            Snackbar.show({
+                title: 'Login Failed Do again',
+                duration: Snackbar.LENGTH_SHORT,
+            });
+        }
+
         return (
             <View style={styles.container}>
                 <View style={styles.container1}>
