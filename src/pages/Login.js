@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 import { LOGIN_EMAIL, LOGIN_PASSWORD, LOGIN_USER } from '../constants/ActionTypes';
 import axios from "axios";
 import Snackbar from "react-native-snackbar";
-import { put } from "redux-saga/effects";
 
 
 

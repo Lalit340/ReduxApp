@@ -1,9 +1,16 @@
-import { LOGOUT_DIALOG } from "../constants/ActionTypes";
+import { LOGOUT_OPEN, LOGOUT_CLOSE } from "../constants/ActionTypes";
 
-export default (state = { success: '', error: '', errToast: [] }, action) => {
+export default (state = { click: true, success: '', error: '', errToast: [] }, action) => {
     switch (action.type) {
-        case LOGOUT_DIALOG:
-            return { ...state, [action.key]: action.value };
+        case LOGOUT_OPEN:
+            return {
+                ...state,
+            };
+        case LOGOUT_CLOSE:
+            return {
+                ...state,
+                click: false,
+            };
 
         default:
             return state;

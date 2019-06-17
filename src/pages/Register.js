@@ -13,7 +13,6 @@ import styles from '../styles/Register.less';
 import { USER_EMAIL, USER_FIRSTNAME, USER_LASTNAME, USER_PASSWORD1, USER_PASSWORD2, DATE_OF_BIRTH, MOBILE_NUMBER, REGISTRATION_START } from '../constants/ActionTypes';
 import { connect } from 'react-redux';
 import Snackbar from "react-native-snackbar";
-import { put } from "redux-saga/effects";
 
 //import register from '../config/Implementation';
 //import saveData from '../config/AsyncStorage';
@@ -159,14 +158,12 @@ class SingupPage extends Component {
                 title: 'Registration Success',
                 duration: Snackbar.LENGTH_SHORT,
             })
-           // put({ type: REGISTRATION_SUCCESS, payload: '' })
 
         } else if (this.props.error === 401) {
             Snackbar.show({
                 title: 'Registration failed',
                 duration: Snackbar.LENGTH_SHORT,
             })
-          //  put({ type: REGISTRATION_FAIL, payload: '' })
 
         } else if (this.props.error === 500) {
 
@@ -174,7 +171,6 @@ class SingupPage extends Component {
                 title: 'Registration failed',
                 duration: Snackbar.LENGTH_SHORT,
             })
-           // put({ type: REGISTRATION_FAIL, payload: '' })
 
         }
 

@@ -16,4 +16,5 @@ export const LOGIN_CALL = 'LOGIN_CALL';
 export const DATABASE_ERROR = 'DATABASE_ERROR';
 export const LOGIN_RESPONSE = 'LOGIN_RESPONSE ';
 export const REGISTRATION_CALL = 'REGISTRATION_CALL';
-export const LOGOUT_DIALOG    = 'LOGOUT_DIALOG';
+export const LOGOUT_OPEN    = 'LOGOUT_OPEN';
+export const LOGOUT_CLOSE    = 'LOGOUT_CLOSE';

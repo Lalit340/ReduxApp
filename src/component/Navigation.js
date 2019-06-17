@@ -6,6 +6,7 @@ import Dash from '../pages/DashBoard';
 import regPage from '../pages/Register';
 import Forgot from '../pages/Forgot';
 import Drawer from './NavigationDrawer';
+import Log from '../pages/LogOut';
 
 
 const pages = createStackNavigator({
@@ -14,6 +15,8 @@ const pages = createStackNavigator({
     Data: { screen: regPage, navigationOptions: { header: null } },
     Forgot: { screen: Forgot ,navigationOptions: { header: null } },
     Drawer: { screen: Drawer , navigationOptions: { header: null }},
+    Log: { screen: Log , navigationOptions: { header: null }},
+
 },
     {
         initialRouteName: 'Login',
