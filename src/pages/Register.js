@@ -14,8 +14,6 @@ import { USER_EMAIL, USER_FIRSTNAME, USER_LASTNAME, USER_PASSWORD1, USER_PASSWOR
 import { connect } from 'react-redux';
 import Snackbar from "react-native-snackbar";
 
-//import register from '../config/Implementation';
-//import saveData from '../config/AsyncStorage';
 
 const mapStateToProps = state => ({ ...state.RegisterReducer });
 const mapDispatchToProps = dispatch => ({
@@ -122,19 +120,6 @@ class SingupPage extends Component {
             }
             this.props.onSubmit(data);
 
-            // axios.post('http://34.213.106.173/api/user/userSignUp', data, {
-            //     headers: {
-            //         "Content-Type": 'application/json'
-            //     }
-            // }).then(response => {
-            //     console.log(response);
-
-            // }).catch(error => {
-            //     console.log({ error });
-            // }
-            // );
-
-            // alert('inserted');
         }
     }
 

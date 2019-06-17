@@ -12,7 +12,6 @@ import {
 import styles from '../styles/Login.less';
 import { connect } from 'react-redux';
 import { LOGIN_EMAIL, LOGIN_PASSWORD, LOGIN_USER } from '../constants/ActionTypes';
-import axios from "axios";
 import Snackbar from "react-native-snackbar";
 
 
@@ -111,25 +110,6 @@ class LoginPage extends Component {
             }
             this.props.onSubmit(data);
 
-
-
-            // axios.post('http://34.213.106.173/api/user/login', data, {
-            //     headers: {
-            //         "Content-Type": 'application/json'
-            //     }
-            // }).then(response => {
-            //     console.log(response);
-            //     if (response.status == 200) {
-            //         this.props.navigation.navigate('Drawer');
-            //     } else {
-            //         alert('enter a valid email & password ');
-            //     }
-            // }).catch(error => {
-            //     alert('enter a valid email & password ');
-            //     console.log(error);
-            // });
-
-
         }
 
     }
@@ -172,7 +152,7 @@ class LoginPage extends Component {
                     placeholderTextColor='#ffffff'
                     keyboardType='email-address'
                     onChangeText={(mail) => this.onEmail(mail)}
-                    //  onSubmitEditing={() => this.pwd.focus()}
+                    onSubmitEditing={() => pwd.focus()}
                     value={email}
                 />
                 <TextInput
@@ -180,7 +160,7 @@ class LoginPage extends Component {
                     placeholder='enter password '
                     placeholderTextColor='#ffffff'
                     secureTextEntry={true}
-                    //  ref={(input) => this.pwd = input}
+                    ref={(input) => pwd = input}
                     onChangeText={(pwd) => this.onPassword(pwd)}
                     value={pwd}
                 />
